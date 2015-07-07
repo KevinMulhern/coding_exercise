@@ -47,7 +47,7 @@ The result should be a sequence that positions c before b, containing all three 
 
 The result should be a sequence that positions f before c, c before b, b before e and a before d containing all six jobs abcdef.
 
-+Given the following job structure:
++ Given the following job structure:
 
 **a =>**
 **b =>**
@@ -55,7 +55,7 @@ The result should be a sequence that positions f before c, c before b, b before 
 
 The result should be an error stating that jobs can’t depend on themselves.
 
-+Given the following job structure:
++ Given the following job structure:
 
 **a =>**
 **b => c**
