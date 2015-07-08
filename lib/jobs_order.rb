@@ -10,10 +10,10 @@ class JobsOrder
   def parse(jobs_string)
     jobs_hash = {}
     jobs_string.scan(/(\w) => ?(\w?)/).each do |job, dependency|
-      raise ArgumentError, 'Job and dependencey cannot be the same' if job == dependency
+      raise ArgumentError, 'Job and dependency cannot be the same' if job == dependency
       jobs_hash[job] = dependency
-    jobs_hash[job] = dependency
     end
+    invalid_dependency?(jobs_hash)
     return jobs_hash 
   end
 
@@ -42,6 +42,14 @@ class JobsOrder
       @checked[job] = "checked"
       @sorted_jobs << job
     end   
+  end
+
+  def invalid_dependency?(jobs_hash)
+    jobs_hash.values.each do |dependency|
+      if dependency != "" && !jobs_hash.has_key?(dependency)
+        raise "Invalid dependency #{dependency}"
+      end
+    end
   end
 
 end

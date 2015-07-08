@@ -95,7 +95,7 @@ describe JobsOrder do
     context "given a job sequence with a dependency that isnt a job" do
       let(:jobs_string) {"a => c\nb => d\nc => b\nd => e"}
       it "should raise a invalid dependency error" do 
-        expect{ jobs_order.parse(jobs_string)}.to raise_error(ArgumentError)
+        expect{ jobs_order.parse(jobs_string)}.to raise_error
       end
         
     end
