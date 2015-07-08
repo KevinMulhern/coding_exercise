@@ -10,6 +10,8 @@ class JobsOrder
   def parse(jobs_string)
     jobs_hash = {}
     jobs_string.scan(/(\w) => ?(\w?)/).each do |job, dependency|
+      raise ArgumentError, 'Job and dependencey cannot be the same' if job == dependency
+      job_hash[job] = dependency
     jobs_hash[job] = dependency
     end
     return jobs_hash 
