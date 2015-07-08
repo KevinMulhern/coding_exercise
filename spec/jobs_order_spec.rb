@@ -82,7 +82,7 @@ describe JobsOrder do
       let(:jobs_string) { "a =>\nb =>\nc => c" }
 
       it "should raise a self dependency error" do 
-       expect{ jobs_order.sort }.to raise_error(ArgumentError)
+       expect{ jobs_order.sort }.to raise_error(JobsOrder::SelfDependencyError)
       end
     end
 
@@ -91,7 +91,7 @@ describe JobsOrder do
       let(:jobs_string) { "a =>\nb => c\nc => f\n d => a\ne =>\nf => b" }
 
       it "should raise a circular dependency error" do
-        expect{ jobs_order.sort }.to raise_error(ArgumentError)
+        expect{ jobs_order.sort }.to raise_error(JobsOrder::CircularDependencyError)
       end
     end
 
@@ -99,7 +99,7 @@ describe JobsOrder do
       let(:jobs_string) { "a => c\nb => d\nc => b\nd => e" }
 
       it "should raise a invalid dependency error" do 
-        expect{ jobs_order.parse(jobs_string) }.to raise_error
+        expect{ jobs_order.parse(jobs_string) }.to raise_error(JobsOrder::InvalidDependencyError)
       end       
     end
   end

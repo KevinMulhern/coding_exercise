@@ -1,4 +1,7 @@
 class JobsOrder
+  class CircularDependencyError < StandardError;end
+  class SelfDependencyError < StandardError;end
+  class InvalidDependencyError < StandardError;end
 
   attr_reader :sorted_jobs
   def initialize(jobs_string)
@@ -10,7 +13,7 @@ class JobsOrder
   def parse(jobs_string)
     jobs_hash = {}
     jobs_string.scan(/(\w) => ?(\w?)/).each do |job, dependency|
-      raise ArgumentError, 'Job and dependency cannot be the same' if job == dependency
+      fail SelfDependencyError, 'job and dependency cannot be the same' if job == dependency
       jobs_hash[job] = dependency
     end
     invalid_dependency?(jobs_hash)
@@ -35,7 +38,7 @@ class JobsOrder
 
   def visit(job)
     if @checked[job] == "temp_check"
-      raise ArgumentError, "Jobs cannot have circular dependencies"
+      fail CircularDependencyError, "Jobs cannot have circular dependencies"
     elsif @checked[job] == "unchecked"
       @checked[job] = "temp_check"
       visit(@jobs_hash[job]) unless @jobs_hash[job].empty?
@@ -47,13 +50,8 @@ class JobsOrder
   def invalid_dependency?(jobs_hash)
     jobs_hash.values.each do |dependency|
       if dependency != "" && !jobs_hash.has_key?(dependency)
-        raise "Invalid dependency #{dependency}"
+        fail InvalidDependencyError,"Invalid dependency #{dependency}"
       end
     end
   end
-
 end
-
-p = JobsOrder.new("a =>")
-p.sort
-p p.sorted_jobs
