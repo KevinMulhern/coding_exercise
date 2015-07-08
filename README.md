@@ -36,7 +36,7 @@ Run the sort method on the jobs object:
 ```bash
 jobs.sort
 ```
-To see the final sorted job structure call the sorted_jobs method:
+To see the final sorted jobs sequence call the sorted_jobs method:
 ```bash
 jobs.sorted_jobs
 ```
