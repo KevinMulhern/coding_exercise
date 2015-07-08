@@ -2,7 +2,11 @@
 Clone the repo and install the rspec gem
 ```bash
 git clone https://github.com/KevinMulhern/coding_exercise.git
+```
+```bash
 cd coding_exercise
+```
+```bash
 bundle
 ```
 
@@ -22,7 +26,8 @@ Have Fun.
 #The Challenge
 Imagine we have a list of jobs, each represented by a character. Because certain jobs must be done before others, a job may have a dependency on another job. For example, a may depend on b, meaning the final sequence of jobs should place b before a. If a has no dependency, the position of a in the final sequence does not matter.
 
-+ Given you’re passed an empty string (no jobs), the result should be an empty sequence.
+Given you’re passed an empty string (no jobs), the result should be an empty sequence.
+---
 
 + Given the following job structure:
 
