@@ -79,9 +79,10 @@ describe JobsOrder do
       let(:jobs_order) {JobsOrder.new("a =>\nb =>\nc => c")}
 
       it "should raise a self dependency error" do 
-        expect{ jobs_order.sort}.to raise_error(ArgumentError)
+       expect{ jobs_order.sort}.to raise_error(ArgumentError)
       end
     end
+
 
     context "given a job sequence with a circular dependency" do 
       let(:jobs_order) {JobsOrder.new("a =>\nb => c\nc => f\n d => a\ne =>\nf => b")}
