@@ -1,4 +1,7 @@
-#Set Up
+#Jobs Order
+
+
+##Set Up
 Clone the repo and install the rspec gem
 ```bash
 git clone https://github.com/KevinMulhern/coding_exercise.git
@@ -10,9 +13,39 @@ cd coding_exercise
 bundle
 ```
 
+##Running tests
+From the root directory, run:
+```bash
+rspec
+```
+
+##Running the jobs order program
+Open IRB in the root directory of the project:
+```bash
+irb
+```
+Require the jobs_order class:
+```bash
+require "./lib/jobs_order.rb"
+```
+Intialize a new JobOrder object:
+```bash
+jobs = JobsOrder.new("your job structure here")
+```
+Run the sort method on the jobs object:
+```bash
+jobs.sort
+```
+To see the final sorted job structure call the sorted_jobs method:
+```bash
+jobs.sorted_jobs
+```
 
 
-#Intro
+
+##Problem Description
+
+###Intro
 The purpose of this exercise is to see how you approach a problem, and how you solve it. We’re interested to see how you structure your Ruby code, your command of the language and good design and testing principles, bear this in mind throughout.
 
 **HINT:** Start with a method that accepts a single string argument and returns a string (or a collection) which represents the ordered sequence of jobs (since each job is a single character).
@@ -23,18 +56,16 @@ The purpose of this exercise is to see how you approach a problem, and how you s
 
 Have Fun.
 
-##The Challenge
+###The Challenge
 Imagine we have a list of jobs, each represented by a character. Because certain jobs must be done before others, a job may have a dependency on another job. For example, a may depend on b, meaning the final sequence of jobs should place b before a. If a has no dependency, the position of a in the final sequence does not matter.
 
 + Given you’re passed an empty string (no jobs), the result should be an empty sequence.
----
 
 + Given the following job structure:
 
    **a =>**
 
 The result should be a sequence consisting of a single job a.
----
 
 + Given the following job structure:
 
