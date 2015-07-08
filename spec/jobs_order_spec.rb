@@ -73,7 +73,7 @@ describe JobsOrder do
     end
   end
 
-  describe "Error scenarios" do
+  describe "error scenarios" do
 
     context "given a job sequence with a self dependency" do
       let(:jobs_order) {JobsOrder.new("a =>\nb =>\nc => c")}
@@ -91,5 +91,15 @@ describe JobsOrder do
         expect{ jobs_order.sort }.to raise_error(ArgumentError)
       end
     end
+
+    context "given a job sequence with a dependency that isnt a job" do
+      let(:jobs_string) {"a => c\nb => d\nc => b\nd => e"}
+      it "should raise a invalid dependency error" do 
+        expect{ jobs_order.parse(jobs_string)}.to raise_error(ArgumentError)
+      end
+        
+    end
+
   end
 end
+
