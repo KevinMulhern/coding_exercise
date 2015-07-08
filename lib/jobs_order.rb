@@ -20,14 +20,6 @@ class JobsOrder
     return jobs_hash 
   end
 
-  def check_jobs
-    checked = {}
-    @jobs_hash.each_key do |job|
-      checked[job] = "unchecked"
-    end
-    return checked
-  end
-
   def sort
     while @checked.values.include?("unchecked")
       @checked.each_pair do |job, status|
@@ -36,22 +28,33 @@ class JobsOrder
     end
   end
 
-  def visit(job)
-    if @checked[job] == "temp_check"
-      fail CircularDependencyError, "Jobs cannot have circular dependencies"
-    elsif @checked[job] == "unchecked"
-      @checked[job] = "temp_check"
-      visit(@jobs_hash[job]) unless @jobs_hash[job].empty?
-      @checked[job] = "checked"
-      @sorted_jobs << job
-    end   
-  end
 
-  def invalid_dependency?(jobs_hash)
-    jobs_hash.values.each do |dependency|
-      if dependency != "" && !jobs_hash.has_key?(dependency)
-        fail InvalidDependencyError,"Invalid dependency #{dependency}"
+  private
+
+    def visit(job)
+      if @checked[job] == "temp_check"
+        fail CircularDependencyError, "Jobs cannot have circular dependencies"
+      elsif @checked[job] == "unchecked"
+        @checked[job] = "temp_check"
+        visit(@jobs_hash[job]) unless @jobs_hash[job].empty?
+        @checked[job] = "checked"
+        @sorted_jobs << job
+      end   
+    end
+
+    def check_jobs
+      checked = {}
+      @jobs_hash.each_key do |job|
+        checked[job] = "unchecked"
+      end
+      return checked
+    end
+
+    def invalid_dependency?(jobs_hash)
+      jobs_hash.values.each do |dependency|
+        if dependency != "" && !jobs_hash.has_key?(dependency)
+          fail InvalidDependencyError,"Invalid dependency #{dependency}"
+        end
       end
     end
-  end
 end

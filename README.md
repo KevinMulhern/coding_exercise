@@ -16,15 +16,15 @@ Imagine we have a list of jobs, each represented by a character. Because certain
 
 + Given the following job structure:
 
-**a =>**
+   **a =>**
 
 The result should be a sequence consisting of a single job a.
 
 + Given the following job structure:
 
-**a =>**
-**b =>**
-**c =>**
+   **a =>**
+   **b =>**
+   **c =>**
 
 The result should be a sequence containing all three jobs abc in no significant order.
 
