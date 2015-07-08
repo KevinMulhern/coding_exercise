@@ -4,7 +4,7 @@ describe JobsOrder do
   let(:jobs_order) { JobsOrder.new(jobs_string) } 
 
   describe "#parse" do
-    let(:jobs_string) {"a =>"}
+    let(:jobs_string) { "a =>" }
 
     it "convert the an inputted string into a hash" do
       jobs_order.parse(jobs_string).should be_eql({"a" => ""})
@@ -16,7 +16,8 @@ describe JobsOrder do
       jobs_order.sort
     end
     context "given an empty string" do
-      let(:jobs_string) {""}
+      let(:jobs_string) { "" }
+
       it "should return []" do
         expect(jobs_order.sorted_jobs).to eql([])    
       end
@@ -27,7 +28,8 @@ describe JobsOrder do
     end
 
     context "given one job" do
-      let(:jobs_string) {"a =>"}
+      let(:jobs_string) { "a =>" }
+
       it "should return one one job" do
         expect(jobs_order.sorted_jobs).to eql(["a"])
       end
@@ -38,7 +40,8 @@ describe JobsOrder do
     end
 
     context "given three jobs" do 
-      let(:jobs_string) {"a =>\nb =>\nc =>"}
+      let(:jobs_string) { "a =>\nb =>\nc =>" }
+
       it "should return abc job sequence" do
         expect(jobs_order.sorted_jobs).to eql(["a", "b", "c"])
       end
@@ -49,7 +52,7 @@ describe JobsOrder do
     end
 
     context "given three jobs and one dependency" do 
-      let(:jobs_string) {"a =>\nb => c\nc =>"}
+      let(:jobs_string) { "a =>\nb => c\nc =>" }
 
       it "should return job sequence acb" do
         expect(jobs_order.sorted_jobs).to eql(["a", "c", "b"])
@@ -61,7 +64,7 @@ describe JobsOrder do
     end
 
     context "given six jobs and four dependencies" do 
-      let(:jobs_string) {"a =>\nb => c\nc => f\nd => a\n e => b\n f =>"}
+      let(:jobs_string) { "a =>\nb => c\nc => f\nd => a\n e => b\n f =>" }
 
       it "should return job sequence afcbde" do
         expect(jobs_order.sorted_jobs).to eql(["a", "f", "c", "b", "d", "e"])
@@ -76,16 +79,16 @@ describe JobsOrder do
   describe "error scenarios" do
 
     context "given a job sequence with a self dependency" do
-      let(:jobs_order) {JobsOrder.new("a =>\nb =>\nc => c")}
+      let(:jobs_string) { "a =>\nb =>\nc => c" }
 
       it "should raise a self dependency error" do 
-       expect{ jobs_order.sort}.to raise_error(ArgumentError)
+       expect{ jobs_order.sort }.to raise_error(ArgumentError)
       end
     end
 
 
     context "given a job sequence with a circular dependency" do 
-      let(:jobs_order) {JobsOrder.new("a =>\nb => c\nc => f\n d => a\ne =>\nf => b")}
+      let(:jobs_string) { "a =>\nb => c\nc => f\n d => a\ne =>\nf => b" }
 
       it "should raise a circular dependency error" do
         expect{ jobs_order.sort }.to raise_error(ArgumentError)
@@ -93,13 +96,12 @@ describe JobsOrder do
     end
 
     context "given a job sequence with a dependency that isnt a job" do
-      let(:jobs_string) {"a => c\nb => d\nc => b\nd => e"}
-      it "should raise a invalid dependency error" do 
-        expect{ jobs_order.parse(jobs_string)}.to raise_error
-      end
-        
-    end
+      let(:jobs_string) { "a => c\nb => d\nc => b\nd => e" }
 
+      it "should raise a invalid dependency error" do 
+        expect{ jobs_order.parse(jobs_string) }.to raise_error
+      end       
+    end
   end
 end
 
